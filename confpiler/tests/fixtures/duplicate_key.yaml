@@ -1,0 +1,4 @@
+foo__bar: "this key"
+
+foo:
+  bar: "is duplicated by this key"

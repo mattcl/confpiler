@@ -1,0 +1,2 @@
+# arrays are replaced, not merged
+hoof = ["arrays", "are", "replaced","not","merged"]

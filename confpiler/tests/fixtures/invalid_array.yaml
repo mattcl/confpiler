@@ -1,0 +1,4 @@
+foo:
+  - "this array"
+  - bar: "has a nested value"
+

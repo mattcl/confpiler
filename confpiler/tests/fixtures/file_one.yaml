@@ -1,0 +1,15 @@
+foo:
+  bar: 10
+  baz: 99.9
+
+hoof:
+  - true
+  - false
+  - hello
+
+doof:
+  herp:
+    derp: goodbye
+
+under_scored:
+  key: "https://foo.bar"
