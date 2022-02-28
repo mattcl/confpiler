@@ -1,0 +1,5 @@
+smoke: conf_dir/staging
+
+mykey:
+  foo: hello
+  baz: world

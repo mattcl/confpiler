@@ -54,6 +54,7 @@ use crate::error::{ConfpilerError, Result};
 #[derive(Debug, Clone, Default, Eq, PartialEq)]
 pub struct FlatConfig {
     origin: String,
+
     items: HashMap<String, String>,
 }
 
@@ -298,7 +299,7 @@ impl fmt::Display for MergeWarning {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
         match self {
             Self::RedundantValue {ref overrider, ref key, ref value} => {
-                write!(f, "'{overrider}' is setting '{key}' to '{value}', but it already contained that value")
+                write!(f, "'{overrider}' is attempting to override '{key}' with '{value}', but the key already contains that value")
             }
         }
     }

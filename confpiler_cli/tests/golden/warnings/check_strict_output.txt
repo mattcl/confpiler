@@ -1,0 +1,7 @@
+Checking configuration...
+-STDERR-
+Error: Configuration is not valid when treating warnings as errors
+
+Caused by:
+    'tests/fixtures/conf_dir/staging' is attempting to override 'MYKEY__BAZ' with 'world', but the key already contains that value
+    'tests/fixtures/conf_dir/staging' is attempting to override 'MYKEY__FOO' with 'hello', but the key already contains that value

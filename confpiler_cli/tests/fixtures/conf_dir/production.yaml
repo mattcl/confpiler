@@ -1,0 +1,8 @@
+smoke: conf_dir/production
+
+mykey:
+  baz: planet
+
+myarr:
+  - 11
+  - 33

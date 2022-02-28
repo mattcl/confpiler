@@ -1,0 +1,11 @@
+smoke: conf_dir/default
+
+mykey:
+  foo: hello
+  bar: cold
+  baz: world
+
+myarr:
+  - 10
+  - true
+  - word

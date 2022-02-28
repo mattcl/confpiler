@@ -1,7 +1,9 @@
 [package]
 name = "confpiler_cli"
+authors = ["Matt Chun-Lum <matt@questionable.engineering>"]
 version = "0.1.0"
 edition = "2021"
+description = "A configuration \"compiler\" and exporter"
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
@@ -11,4 +13,10 @@ path = "src/main.rs"
 doc = false
 
 [dependencies]
+anyhow = "1.0"
+clap = { version = "3.1.2", features = ["derive"] }
 confpiler = { path = "../confpiler" }
+serde_json = "1.0"
+
+[dev-dependencies]
+assert_cmd = "2.0"

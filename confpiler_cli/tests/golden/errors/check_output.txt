@@ -1,0 +1,6 @@
+Checking configuration...
+-STDERR-
+Error: Configuration as specified is not valid
+
+Caused by:
+    the key "MYKEY__FOO" would be overwritten by another value in the same configuration file

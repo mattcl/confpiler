@@ -1,0 +1,4 @@
+mykey:
+  foo: adieu
+
+mykey__foo: "same-file-duplicate-key"

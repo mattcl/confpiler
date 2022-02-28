@@ -1,6 +1,8 @@
 //! Crate error definitions and associated conversions
 use config::ConfigError;
 
+use crate::MergeWarning;
+
 /// Convenience alias for Results returned by this crate
 pub type Result<T> = std::result::Result<T, ConfpilerError>;
 
@@ -24,16 +26,20 @@ pub enum ConfpilerError {
     ///
     /// An unsupported array contains nested values.
     UnsupportedArray(String),
+
+    /// This is a convenience wrapper for treating warnings as erros.
+    Warnings(Vec<MergeWarning>),
 }
 
 impl std::error::Error for ConfpilerError {
     fn source(&self) -> Option<&(dyn std::error::Error + 'static)> {
         match *self {
-            ConfpilerError::ConfigError(ref err) => Some(err),
+            ConfpilerError::ConfigError(_) => None,
             ConfpilerError::DuplicateConfig(_) => None,
             ConfpilerError::DuplicateKey(_) => None,
             ConfpilerError::NoConfigSpecified => None,
             ConfpilerError::UnsupportedArray(_) => None,
+            ConfpilerError::Warnings(_) => None,
         }
     }
 }
@@ -41,9 +47,7 @@ impl std::error::Error for ConfpilerError {
 impl std::fmt::Display for ConfpilerError {
     fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
         match *self {
-            ConfpilerError::ConfigError(ref err) => {
-                write!(f, "{}", err)
-            }
+            ConfpilerError::ConfigError(ref err) => err.fmt(f),
             ConfpilerError::DuplicateConfig(ref config) => {
                 write!(f, "the config \"{config}\" was specified twice")
             }
@@ -59,6 +63,11 @@ impl std::fmt::Display for ConfpilerError {
             ConfpilerError::UnsupportedArray(ref key) => {
                 write!(f, "the array at \"{key}\" is unsupported (arrays must not contain arrays or maps to be condidered valid)")
             }
+            ConfpilerError::Warnings(ref warnings) => {
+                let mut out = warnings.iter().map(|w| w.to_string()).collect::<Vec<String>>();
+                out.sort();
+                write!(f, "{}", out.join("\n"))
+            }
         }
     }
 }
@@ -68,3 +77,10 @@ impl From<ConfigError> for ConfpilerError {
         ConfpilerError::ConfigError(err)
     }
 }
+
+impl From<Vec<MergeWarning>> for ConfpilerError {
+    fn from(value: Vec<MergeWarning>) -> ConfpilerError {
+        ConfpilerError::Warnings(value)
+    }
+}
+

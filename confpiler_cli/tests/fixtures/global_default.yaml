@@ -1,0 +1,4 @@
+smoke: global_default
+
+global:
+  indicator: true
