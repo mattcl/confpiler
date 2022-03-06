@@ -1,4 +1,5 @@
-**!! This is currently a hobby project, use at your own risk !!**
+**This is currently a hobby project.** While it currently works as advertised
+(at least on linux), patches may be slow.
 
 # Confpiler (crate) #
 
@@ -45,3 +46,10 @@ delimited strings (with the default separator being `,`).
 
 This does not support arrays containing more complex values like other arrays
 and maps.
+
+### The following formats are currently supported: ###
+
+  * JOSN
+  * TOML
+  * YAML
+  * INI

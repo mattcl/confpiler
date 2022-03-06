@@ -1,10 +1,16 @@
-**!! This is currently a hobby project, use at your own risk !!**
+**This is currently a hobby project.** While it currently works as advertised
+(at least on linux), patches may be slow.
 
 # Confpiler (cli) #
 
 This cli tool is intended to "compile" an ordered set of configuration files
 into a single, flattened representation suitable for exporting to environment
 variables.
+
+
+For a complete list of subcommands/option (and more detailed help), see the
+relevant `--help` section.
+
 
 ### A simple example: ###
 
@@ -65,5 +71,11 @@ $ confpiler check global.yaml myapp --env staging
 $ confpiler check global.yaml myapp --env staging --strict
 ```
 
-For a complete list of sucommands/option (and more detailed help), see the
-relevant `--help` section.
+## Supported formats ##
+
+The following formats are currently supported:
+
+  * JOSN
+  * TOML
+  * YAML
+  * INI

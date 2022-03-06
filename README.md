@@ -1,4 +1,5 @@
-**!! This is currently a hobby project, use at your own risk !!**
+**This is currently a hobby project.** While it currently works as advertised
+(at least on linux), patches may be slow.
 
 # Confpiler #
 
@@ -20,7 +21,9 @@ Specific READMEs:
   * [library README](confpiler/README.md)
   * [cli README](confpiler_cli/README.md)
 
-The simplest use case would be processing a single file:
+## CLI ##
+
+### A simple example: ###
 
 ```yaml
 # given a file, config.yaml
@@ -38,7 +41,42 @@ FOO__BAZ="false"
 HOOF="https://some.url"
 ```
 
-A more complicated example would be merging
+### A more complicated example ###
+
+Given some files like the following:
+
+```
+somedir/
+  global.yaml
+  myapp/
+    default.yaml
+    development.yaml
+    production.yaml
+    staging.yaml
+```
+
+We can compile to a single representation of the "production" configuration
+with
+
+```sh
+$ cd somedir
+$ confpiler build global.yaml myapp --env production --json
+```
+
+Which would yield a dictionary in JSON form representing merging `global.yaml`,
+`myapp/default.yaml` and `myapp/production.yaml`.
+
+
+**Currently the cli tool requires a "default" file when processing
+a directory.**
+
+
+## Library ##
+
+See the [library README](confpiler/README.md)
+
+
+## Supported formats ##
 
 The following formats are currently supported:
 
