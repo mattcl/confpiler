@@ -1,9 +1,11 @@
-// use confpiler::ConfigBuilder;
+use confpiler::FlatConfig;
 
 fn main() {
-    //     ConfigBuilder::new()
-    //         .append_path("confpiler/examples/basic/config/default")
-    //         .append_path("confpiler/examples/basic/config/production")
-    //         .build()
-    //         .expect("Failed to build config");
+    let (conf, _warnings) = FlatConfig::builder()
+        .add_config("confpiler/examples/basic/config/default")
+        .add_config("confpiler/examples/basic/config/production")
+        .build()
+        .expect("invalid config");
+
+    println!("{:#?}", conf.items());
 }
