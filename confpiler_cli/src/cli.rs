@@ -1,7 +1,7 @@
-use std::path::PathBuf;
+use std::path::{Path, PathBuf};
 
-use anyhow::{Result, anyhow, bail};
-use clap::{Parser, Subcommand, Args};
+use anyhow::{anyhow, bail, Context, Result};
+use clap::{Args, Parser, Subcommand};
 use confpiler::{FlatConfig, MergeWarning};
 
 const EXAMPLES: &'static str = "
@@ -110,7 +110,9 @@ pub struct CommonConfigArgs {
     #[clap(required = true, parse(from_os_str))]
     pub path: Vec<PathBuf>,
 
-    /// The environment to compile (has no effect unless specifying a directory)
+    /// The environment to compile (has no effect unless specifying a directory).
+    ///
+    /// If no corresponding file exists, it is ignored.
     #[clap(short, long = "env")]
     pub environment: Option<String>,
 
@@ -131,7 +133,6 @@ pub struct CommonConfigArgs {
     pub strict: bool,
 }
 
-
 impl CommonConfigArgs {
     pub fn try_make_config(&self) -> Result<(FlatConfig, Vec<MergeWarning>)> {
         let mut builder = FlatConfig::builder();
@@ -145,7 +146,8 @@ impl CommonConfigArgs {
                 bail!("Path '{}' does not exist", path.display());
             }
 
-            // we have to add two sources: the "default" and the "env"
+            // we have to add two sources: the "default" and the "env", if it
+            // exists
             if path.is_dir() {
                 let def = path.join(&self.default);
                 let def_str = def
@@ -153,22 +155,48 @@ impl CommonConfigArgs {
                     .ok_or_else(|| anyhow!("Path does not contain valid characters"))?;
                 builder.add_config(def_str);
 
-                if let Some(ref env) = self.environment {
-                    let env = path.join(env);
-                    let env_str = env
-                        .to_str()
-                        .ok_or_else(|| anyhow!("Path does not contain valid characters"))?;
-                    builder.add_config(env_str);
+                if let Some(ref environment) = self.environment {
+                    let env = path.join(environment);
+
+                    // we allow either specifying the full filename or just the
+                    // stem as env
+                    if env.exists() || check_stem_exists(path, environment)? {
+                        let env_str = env
+                            .to_str()
+                            .ok_or_else(|| anyhow!("Path does not contain valid characters"))?;
+
+                        builder.add_config(env_str);
+                    }
                 }
             } else {
                 builder.add_config(
-                    path
-                        .to_str()
-                        .ok_or_else(|| anyhow!("Path does not contain valid characters"))?
+                    path.to_str()
+                        .ok_or_else(|| anyhow!("Path does not contain valid characters"))?,
                 );
             }
         }
 
         Ok(builder.build()?)
+    }
+}
+
+fn check_stem_exists(path: &Path, desired: &str) -> Result<bool> {
+    if path.is_dir() {
+        Ok(path
+            .read_dir()
+            .with_context(|| format!("Failed to read {}", path.display()))?
+            .any(|entry| {
+                if let Ok(entry) = entry {
+                    let path = entry.path();
+                    if path.is_file() {
+                        if let Some(stem) = path.file_stem() {
+                            return stem.to_str() == Some(desired);
+                        }
+                    }
+                }
+                false
+            }))
+    } else {
+        Ok(false)
     }
 }

@@ -1,4 +1,4 @@
-**!! This is a hobby project, use at your own risk !!**
+**!! This is currently a hobby project, use at your own risk !!**
 
 # Confpiler (crate) #
 
@@ -39,3 +39,9 @@ let (conf, warnings) = FlatConfig::builder()
     .build()
     .expect("invalid config");
 ```
+
+All values are converted to strings, with simple arrays being collapsed to
+delimited strings (with the default separator being `,`).
+
+This does not support arrays containing more complex values like other arrays
+and maps.

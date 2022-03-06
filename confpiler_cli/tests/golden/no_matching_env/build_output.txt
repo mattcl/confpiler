@@ -1,0 +1,5 @@
+MYARR="10,true,word"
+MYKEY__BAR="cold"
+MYKEY__BAZ="world"
+MYKEY__FOO="hello"
+SMOKE="conf_dir/default"

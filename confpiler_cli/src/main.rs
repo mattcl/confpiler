@@ -1,10 +1,10 @@
-use anyhow::{Result, Context};
+use anyhow::{Context, Result};
 use clap::Parser;
-use cli::{Cli, TopLevel, CommonConfigArgs};
+use cli::{Cli, CommonConfigArgs, TopLevel};
 use confpiler::{error::ConfpilerError, FlatConfig, MergeWarning};
+use snailquote::escape;
 
 mod cli;
-
 
 fn main() -> Result<()> {
     let args = Cli::parse();
@@ -23,10 +23,25 @@ fn main() -> Result<()> {
                 }
 
                 for (k, v) in items {
-                    println!("{}=\"{}\"", k, v);
+                    // So the behavior of the library being used to do the
+                    // escaping automatically ads single/double quotes if
+                    // necessary, and does not otherwise. So we have to do this
+                    // ugly hack to work around that
+                    //
+                    // TODO: the current escaping behavior is not exactly what
+                    // we want because we want to allow for $var substitutions
+                    // to be defined but we currently are going to add single
+                    // quotes. We might have to implement our own escaping
+                    // for this... - MCL - 2022-03-03
+                    let escaped = escape(v);
+                    if v.as_str() != escaped {
+                        println!("{}={}", k, escaped);
+                    } else {
+                        println!("{}=\"{}\"", k, v);
+                    }
                 }
             }
-        },
+        }
         TopLevel::Check(check_args) => {
             println!("Checking configuration...");
             let (_, warnings) = get_config(&check_args.common)?;
@@ -39,7 +54,7 @@ fn main() -> Result<()> {
             }
 
             println!("\nok")
-        },
+        }
     }
 
     Ok(())
@@ -59,7 +74,6 @@ fn get_config(args: &CommonConfigArgs) -> Result<(FlatConfig, Vec<MergeWarning>)
         // way the compiler can't deal with
         Ok((conf, warnings))
     }
-
 }
 
 // so doing this sort here is a little weird, but we already have sorted output
@@ -67,7 +81,10 @@ fn get_config(args: &CommonConfigArgs) -> Result<(FlatConfig, Vec<MergeWarning>)
 //
 // // TODO: maybe look at removing the duplication - MCL - 2022-02-27
 fn warnings_formatter(warnings: &[MergeWarning]) -> String {
-    let mut out = warnings.iter().map(|w| format!("    {}", w)).collect::<Vec<_>>();
+    let mut out = warnings
+        .iter()
+        .map(|w| format!("    {}", w))
+        .collect::<Vec<_>>();
     out.sort();
     out.join("\n")
 }

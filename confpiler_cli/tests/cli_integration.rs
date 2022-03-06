@@ -2,7 +2,6 @@
 //! in the tests for the confpiler library. These tests are really more about
 //! the interface of the command-line tool and file ordering behaviors
 
-
 // annoyingly, we have to put all the macros at the top of the file, so
 // readability is going to suffer a bit here
 macro_rules! check {
@@ -134,7 +133,7 @@ macro_rules! build {
 }
 
 macro_rules! integration_test {
-    ($name:ident, [$($path:literal),+ $(,)?]$(, [$($arg:literal),+ $(,)?])?, $hf_outcome:ident$(,)?) => {
+    ($golden_dir:ident, $name:ident, [$($path:literal),+ $(,)?]$(, [$($arg:literal),+ $(,)?])?, $hf_outcome:ident$(,)?) => {
         mod $name {
             use assert_cmd::{Command, assert::Assert};
             use std::fs;
@@ -142,7 +141,7 @@ macro_rules! integration_test {
 
             /// Retrieve golden output from file
             fn golden(file: &str) -> String {
-                let desired = format!("tests/golden/{}/{}", stringify!($name), file);
+                let desired = format!("tests/golden/{}/{}", stringify!($golden_dir), file);
                 fs::read_to_string(&desired)
                     .expect(&format!("could not open golden output file: {}", &desired))
             }
@@ -167,6 +166,15 @@ macro_rules! integration_test {
             check! { $hf_outcome }
             build! { $hf_outcome }
         }
+    };
+    ($name:ident, [$($path:literal),+ $(,)?]$(, [$($arg:literal),+ $(,)?])?, $hf_outcome:ident$(,)?) => {
+        integration_test! {
+            $name,
+            $name,
+            [$($path,)+],
+            $([$($arg,)*],)?
+            $hf_outcome
+        }
     }
 }
 
@@ -175,6 +183,12 @@ macro_rules! integration_test {
 integration_test! {
     simple,
     ["tests/fixtures/global_default.yaml"],
+    succeeds,
+}
+
+integration_test! {
+    shell_escaping,
+    ["tests/fixtures/special_chars.yaml"],
     succeeds,
 }
 
@@ -221,4 +235,13 @@ integration_test! {
     ],
     ["--env", "development"],
     fails,
+}
+
+integration_test! {
+    no_matching_env,
+    [
+        "tests/fixtures/conf_dir",
+    ],
+    ["--env", "missing"],
+    succeeds,
 }

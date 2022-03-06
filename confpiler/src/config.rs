@@ -4,11 +4,11 @@ use std::fmt;
 
 use crate::error::{ConfpilerError, Result};
 
-/// A representaiton of a flattened, compiled configuration.
+/// A representation of a flattened, compiled configuration.
 ///
 /// When constructed via the builder, this produces a set of key/value pairs
 /// where the keys are produced from flattening the nested structure of a config
-/// file and converting the values into their string representaitons.
+/// file and converting the values into their string representations.
 ///
 /// See the crate examples for more detailed usage.
 ///
@@ -122,7 +122,7 @@ impl FlatConfig {
 ///
 /// # Examples
 /// ```
-/// // This example is included for referece, but prefer using
+/// // This example is included for reference, but prefer using
 /// // FlatConfig::builder() to get a builder instance.
 /// use confpiler::FlatConfigBuilder;
 ///
@@ -292,13 +292,21 @@ pub enum MergeWarning {
     /// unchanged, as merging files `A -> B -> C` where `B` contained the
     /// redundant value does not mean that `C` did not then change that value
     /// to something else.
-    RedundantValue {overrider: String, key: String, value: String}
+    RedundantValue {
+        overrider: String,
+        key: String,
+        value: String,
+    },
 }
 
 impl fmt::Display for MergeWarning {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
         match self {
-            Self::RedundantValue {ref overrider, ref key, ref value} => {
+            Self::RedundantValue {
+                ref overrider,
+                ref key,
+                ref value,
+            } => {
                 write!(f, "'{overrider}' is attempting to override '{key}' with '{value}', but the key already contains that value")
             }
         }
@@ -327,7 +335,7 @@ fn flatten_into_inner(
     }
 
     for (key, value) in input.iter() {
-        // convert the current key to upppercase and add it to the list of
+        // convert the current key to uppercase and add it to the list of
         // components so that we can form names with the current "path"
         let upper_key = key.to_ascii_uppercase();
         components.push(upper_key);
@@ -529,7 +537,7 @@ mod tests {
     mod flatten_into {
         use super::super::*;
 
-        // so this is a PITA to create, but it's probably? better than trying
+        // so this is a PITA to create, but it's probably? Better than trying
         // to load a real config file from disk. And I have more control over
         // the types
         fn valid_input() -> HashMap<String, Value> {

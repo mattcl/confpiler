@@ -1,9 +1,11 @@
 [package]
 name = "confpiler"
+authors = ["Matt Chun-Lum <matt@questionable.engineering>"]
 version = "0.1.0"
 edition = "2021"
-
-# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+license = "MIT OR Apache-2.0"
+description = "A configuration \"compiler\" to aid in turning configuration file(s) into environment variables."
+categories = ["config"]
 
 [dependencies]
 config = "0.12"

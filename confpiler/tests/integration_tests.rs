@@ -1,5 +1,5 @@
-use std::collections::HashMap;
 use confpiler::{FlatConfig, MergeWarning};
+use std::collections::HashMap;
 
 // These are all effectively "happy path" tests that serve as smoke tests
 
@@ -10,7 +10,10 @@ fn loading_single_file() {
         ("FOO__BAZ".to_string(), "99.9".to_string()),
         ("HOOF".to_string(), "true,false,hello".to_string()),
         ("DOOF__HERP__DERP".to_string(), "goodbye".to_string()),
-        ("UNDER_SCORED__KEY".to_string(), "https://foo.bar".to_string()),
+        (
+            "UNDER_SCORED__KEY".to_string(),
+            "https://foo.bar".to_string(),
+        ),
     ]);
 
     let (config, warnings) = FlatConfig::builder()
@@ -30,7 +33,10 @@ fn specifying_separators() {
         ("FOO_BAZ".to_string(), "99.9".to_string()),
         ("HOOF".to_string(), "true false hello".to_string()),
         ("DOOF_HERP_DERP".to_string(), "goodbye".to_string()),
-        ("UNDER_SCORED_KEY".to_string(), "https://foo.bar".to_string()),
+        (
+            "UNDER_SCORED_KEY".to_string(),
+            "https://foo.bar".to_string(),
+        ),
     ]);
 
     let (config, warnings) = FlatConfig::builder()
@@ -49,9 +55,15 @@ fn multiple_files() {
     let expected = HashMap::from([
         ("FOO__BAR".to_string(), "10".to_string()),
         ("FOO__BAZ".to_string(), "222.2".to_string()),
-        ("HOOF".to_string(), "arrays,are,replaced,not,merged".to_string()),
+        (
+            "HOOF".to_string(),
+            "arrays,are,replaced,not,merged".to_string(),
+        ),
         ("DOOF__HERP__DERP".to_string(), "goodbye".to_string()),
-        ("UNDER_SCORED__KEY".to_string(), "https://foo.bar".to_string()),
+        (
+            "UNDER_SCORED__KEY".to_string(),
+            "https://foo.bar".to_string(),
+        ),
         ("ANOTHER".to_string(), "one".to_string()),
     ]);
 
@@ -73,7 +85,10 @@ fn generating_warnings() {
         ("FOO__BAZ".to_string(), "333.3".to_string()),
         ("HOOF".to_string(), "true,false,hello".to_string()),
         ("DOOF__HERP__DERP".to_string(), "goodbye".to_string()),
-        ("UNDER_SCORED__KEY".to_string(), "https://foo.bar".to_string()),
+        (
+            "UNDER_SCORED__KEY".to_string(),
+            "https://foo.bar".to_string(),
+        ),
     ]);
 
     let (config, warnings) = FlatConfig::builder()

@@ -27,7 +27,7 @@ pub enum ConfpilerError {
     /// An unsupported array contains nested values.
     UnsupportedArray(String),
 
-    /// This is a convenience wrapper for treating warnings as erros.
+    /// This is a convenience wrapper for treating warnings as errors.
     Warnings(Vec<MergeWarning>),
 }
 
@@ -64,7 +64,10 @@ impl std::fmt::Display for ConfpilerError {
                 write!(f, "the array at \"{key}\" is unsupported (arrays must not contain arrays or maps to be condidered valid)")
             }
             ConfpilerError::Warnings(ref warnings) => {
-                let mut out = warnings.iter().map(|w| w.to_string()).collect::<Vec<String>>();
+                let mut out = warnings
+                    .iter()
+                    .map(|w| w.to_string())
+                    .collect::<Vec<String>>();
                 out.sort();
                 write!(f, "{}", out.join("\n"))
             }
@@ -83,4 +86,3 @@ impl From<Vec<MergeWarning>> for ConfpilerError {
         ConfpilerError::Warnings(value)
     }
 }
-

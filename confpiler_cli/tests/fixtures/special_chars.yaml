@@ -1,0 +1,3 @@
+with_newline: "a\nnewline"
+with_quotes: "some string with \"quotes'"
+with_spaces: "just spaces"
