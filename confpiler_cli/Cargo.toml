@@ -9,6 +9,7 @@ readme = "README.md"
 homepage = "https://github.com/mattcl/confpiler"
 repository = "https://github.com/mattcl/confpiler"
 categories = ["command-line-utilities", "config"]
+exclude = ["/tests"]
 
 [[bin]]
 name = "confpiler"
