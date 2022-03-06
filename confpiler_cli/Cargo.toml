@@ -5,6 +5,9 @@ version = "0.1.0"
 edition = "2021"
 license = "MIT OR Apache-2.0"
 description = "A configuration \"compiler\" and exporter"
+readme = "README.md"
+homepage = "https://github.com/mattcl/confpiler"
+repository = "https://github.com/mattcl/confpiler"
 categories = ["command-line-utilities", "config"]
 
 [[bin]]
