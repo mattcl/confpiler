@@ -1,8 +1,8 @@
 {
-    "GLOBAL___INDICATOR": "true",
-    "MYARR": "11 33",
-    "MYKEY___BAR": "cold",
-    "MYKEY___BAZ": "planet",
-    "MYKEY___FOO": "hello",
-    "SMOKE": "conf_dir/production"
+    "MYPREFIX___GLOBAL___INDICATOR": "true",
+    "MYPREFIX___MYARR": "11 33",
+    "MYPREFIX___MYKEY___BAR": "cold",
+    "MYPREFIX___MYKEY___BAZ": "planet",
+    "MYPREFIX___MYKEY___FOO": "hello",
+    "MYPREFIX___SMOKE": "conf_dir/production"
 }

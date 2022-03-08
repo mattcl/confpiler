@@ -120,6 +120,12 @@ pub struct CommonConfigArgs {
     #[clap(short, long, default_value = "default")]
     pub default: String,
 
+    /// A prefix to prepend to all generated keys.
+    ///
+    /// This value will always be converted to uppercase.
+    #[clap(short, long)]
+    pub prefix: Option<String>,
+
     /// The separator to use when flattening keys from config files
     #[clap(short, long, default_value = "__")]
     pub separator: String,
@@ -138,6 +144,10 @@ impl CommonConfigArgs {
         let mut builder = FlatConfig::builder();
         builder.with_separator(&self.separator);
         builder.with_array_separator(&self.array_separator);
+
+        if let Some(ref prefix) = self.prefix {
+            builder.with_prefix(prefix);
+        }
 
         for p in self.path.iter() {
             let path = p.as_path();

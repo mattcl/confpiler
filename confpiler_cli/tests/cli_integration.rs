@@ -215,6 +215,8 @@ integration_test! {
         "___",
         "--array-separator",
         " ",
+        "--prefix",
+        "myPrefix",
     ],
     succeeds,
 }

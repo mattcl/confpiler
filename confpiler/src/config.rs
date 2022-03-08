@@ -72,6 +72,7 @@ impl FlatConfig {
         FlatConfigBuilder::default()
     }
 
+    /// Convenience method for getting reference to the internal key/value map.
     pub fn items(&self) -> &HashMap<String, String> {
         &self.items
     }
@@ -137,6 +138,7 @@ impl FlatConfig {
 /// ```
 #[derive(Debug, Clone, Eq, PartialEq)]
 pub struct FlatConfigBuilder {
+    prefix: Option<String>,
     configs: Vec<String>,
     separator: String,
     array_separator: String,
@@ -202,6 +204,23 @@ impl FlatConfigBuilder {
         self
     }
 
+    /// Specifies a prefix to be prepended to all generated keys.
+    ///
+    /// This prefix will **always** be converted to ascii uppercase and will be
+    /// be separated from the rest of the generated key by the separator used
+    /// by the builder.
+    ///
+    /// # Examples
+    /// ```
+    /// use confpiler::FlatConfig;
+    /// let mut builder = FlatConfig::builder();
+    /// builder.with_prefix("foo"); // this is the default
+    /// ```
+    pub fn with_prefix(&mut self, prefix: &str) -> &mut Self {
+        self.prefix = Some(prefix.to_ascii_uppercase());
+        self
+    }
+
     /// Attempt to produce a [FlatConfig] without consuming the builder.
     ///
     /// This results in an error in the following scenarios:
@@ -249,7 +268,7 @@ impl FlatConfigBuilder {
             let input = conf.cache.into_table()?;
 
             let mut out = HashMap::new();
-            flatten_into(&input, &mut out, &self.separator, &self.array_separator)?;
+            flatten_into(&input, &mut out, self.prefix.as_ref(), &self.separator, &self.array_separator)?;
             let working_config = FlatConfig {
                 origin: conf_path.to_string(),
                 items: out,
@@ -266,6 +285,7 @@ impl FlatConfigBuilder {
 impl Default for FlatConfigBuilder {
     fn default() -> Self {
         Self {
+            prefix: None,
             configs: Vec::new(),
             separator: Self::DEFAULT_SEPARATOR.to_string(),
             array_separator: Self::DEFAULT_ARRAY_SEPARATOR.to_string(),
@@ -316,10 +336,14 @@ impl fmt::Display for MergeWarning {
 pub(crate) fn flatten_into(
     input: &HashMap<String, Value>,
     output: &mut HashMap<String, String>,
+    prefix: Option<&String>,
     separator: &str,
     array_separator: &str,
 ) -> Result<()> {
     let mut components = Vec::new();
+    if let Some(prefix) = prefix {
+        components.push(prefix.clone());
+    }
     flatten_into_inner(input, output, separator, array_separator, &mut components)
 }
 
@@ -518,6 +542,14 @@ mod tests {
         }
 
         #[test]
+        fn specifying_prefix() {
+            let mut builder = FlatConfigBuilder::default();
+            builder.with_prefix("foo");
+
+            assert_eq!(builder.prefix, Some("FOO".to_string()));
+        }
+
+        #[test]
         fn specifying_separator() {
             let mut builder = FlatConfigBuilder::default();
             builder.with_separator("*");
@@ -598,7 +630,7 @@ mod tests {
             let mut out = HashMap::new();
             let input = HashMap::new();
 
-            let res = flatten_into(&input, &mut out, "__", ",");
+            let res = flatten_into(&input, &mut out, None, "__", ",");
 
             assert!(res.is_ok());
             assert!(out.is_empty());
@@ -618,7 +650,29 @@ mod tests {
                 ("BIZ".to_string(), "false,1111,Goodbye".to_string()),
             ]);
 
-            let res = flatten_into(&input, &mut out, "__", ",");
+            let res = flatten_into(&input, &mut out, None, "__", ",");
+
+            assert!(res.is_ok());
+            assert_eq!(out, expected);
+        }
+
+        #[test]
+        fn supports_prefixing() {
+            let mut out = HashMap::new();
+            let input = valid_input();
+
+            let expected: HashMap<String, String> = HashMap::from([
+                ("PRE__FOO".to_string(), "10.2".to_string()),
+                ("PRE__BAR".to_string(), "Hello".to_string()),
+                ("PRE__BAZ__HERP".to_string(), "false".to_string()),
+                ("PRE__BAZ__DERP".to_string(), "15".to_string()),
+                ("PRE__BAZ__HOOF__DOOF".to_string(), "999".to_string()),
+                ("PRE__BIZ".to_string(), "false,1111,Goodbye".to_string()),
+            ]);
+
+            let prefix = Some("PRE".to_string());
+
+            let res = flatten_into(&input, &mut out, prefix.as_ref(), "__", ",");
 
             assert!(res.is_ok());
             assert_eq!(out, expected);
@@ -638,7 +692,7 @@ mod tests {
                 ("BIZ".to_string(), "false 1111 Goodbye".to_string()),
             ]);
 
-            let res = flatten_into(&input, &mut out, "*", " ");
+            let res = flatten_into(&input, &mut out, None, "*", " ");
 
             assert!(res.is_ok());
             assert_eq!(out, expected);
@@ -655,7 +709,7 @@ mod tests {
                 Value::new(Some(&"test".to_string()), ValueKind::Float(1.0)),
             );
 
-            let res = flatten_into(&invalid, &mut out, "__", ",");
+            let res = flatten_into(&invalid, &mut out, None, "__", ",");
 
             assert!(res.is_err());
 
@@ -672,7 +726,7 @@ mod tests {
             );
 
             let mut out = HashMap::new();
-            let res = flatten_into(&invalid, &mut out, "__", ",");
+            let res = flatten_into(&invalid, &mut out, None, "__", ",");
 
             assert!(res.is_err());
 
@@ -701,7 +755,7 @@ mod tests {
                 ),
             );
 
-            let res = flatten_into(&invalid, &mut out, "__", ",");
+            let res = flatten_into(&invalid, &mut out, None, "__", ",");
 
             assert!(res.is_err());
 
