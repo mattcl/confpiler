@@ -4,7 +4,7 @@ use anyhow::{anyhow, bail, Context, Result};
 use clap::{Args, Parser, Subcommand};
 use confpiler::{FlatConfig, MergeWarning};
 
-const EXAMPLES: &'static str = "
+const EXAMPLES: &str = "
 Examples:
 compiling a single configuration:
 

@@ -110,7 +110,7 @@ impl FlatConfig {
                         *e = v.to_string();
                     }
                 })
-                .or_insert(v.to_string());
+                .or_insert_with(|| v.to_string());
         }
 
         warnings
@@ -257,12 +257,12 @@ impl FlatConfigBuilder {
             if seen_configs.contains(conf_path.as_str()) {
                 return Err(ConfpilerError::DuplicateConfig(conf_path.to_string()));
             } else {
-                seen_configs.insert(&conf_path.as_str());
+                seen_configs.insert(conf_path.as_str());
             }
 
             // attempt to load every specified config
             let conf = Config::builder()
-                .add_source(File::with_name(&conf_path))
+                .add_source(File::with_name(conf_path))
                 .build()?;
 
             let input = conf.cache.into_table()?;
@@ -393,10 +393,10 @@ fn flatten_into_inner(
             // sequence-separated string, which limits the kinds of things we
             // can store in an array
             ValueKind::Array(ref array) => {
-                let canidate = components.join(separator);
+                let candidate = components.join(separator);
 
-                if output.contains_key(&canidate) {
-                    return Err(ConfpilerError::DuplicateKey(canidate.clone()));
+                if output.contains_key(&candidate) {
+                    return Err(ConfpilerError::DuplicateKey(candidate));
                 }
 
                 let val = array
@@ -405,25 +405,25 @@ fn flatten_into_inner(
                     .map(|e| e.into_string())
                     .collect::<std::result::Result<Vec<String>, ConfigError>>()
                     // TODO: this is actually an assumption about why this would fail - MCL - 2022-02-21
-                    .map_err(|_| ConfpilerError::UnsupportedArray(canidate.clone()))?
+                    .map_err(|_| ConfpilerError::UnsupportedArray(candidate.clone()))?
                     .join(array_separator);
 
-                output.insert(canidate, val);
+                output.insert(candidate, val);
             }
 
             // for everything else, we want to add the key/value to the output
             _ => {
-                let canidate = components.join(separator);
+                let candidate = components.join(separator);
 
-                if output.contains_key(&canidate) {
-                    return Err(ConfpilerError::DuplicateKey(canidate.clone()));
+                if output.contains_key(&candidate) {
+                    return Err(ConfpilerError::DuplicateKey(candidate));
                 }
 
                 // this clone might be unnecessary and we could just convert
                 // directly into a string, but I think I want the error to be
                 // raised if the interface changes to not allow arbitrary things
                 // to be converted to string.
-                output.insert(canidate, value.clone().into_string()?);
+                output.insert(candidate, value.clone().into_string()?);
             }
         }
 
