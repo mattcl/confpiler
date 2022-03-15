@@ -268,7 +268,13 @@ impl FlatConfigBuilder {
             let input = conf.cache.into_table()?;
 
             let mut out = HashMap::new();
-            flatten_into(&input, &mut out, self.prefix.as_ref(), &self.separator, &self.array_separator)?;
+            flatten_into(
+                &input,
+                &mut out,
+                self.prefix.as_ref(),
+                &self.separator,
+                &self.array_separator,
+            )?;
             let working_config = FlatConfig {
                 origin: conf_path.to_string(),
                 items: out,
