@@ -3,6 +3,10 @@
 
 # Confpiler #
 
+![Build](https://img.shields.io/github/workflow/status/mattcl/confpiler/CI/master)
+![docs.rs (lib)](https://img.shields.io/docsrs/confpiler)
+
+
 A library and cli tool for "compiling" an ordered set of configuration files
 into a single, flattened representation suitable for exporting to environment
 variables.
