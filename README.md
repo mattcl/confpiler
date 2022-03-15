@@ -3,8 +3,13 @@
 
 # Confpiler #
 
-![Build](https://img.shields.io/github/workflow/status/mattcl/confpiler/CI/master)
-![docs.rs (lib)](https://img.shields.io/docsrs/confpiler)
+[![Build]][actions] [![docs.rs (lib)]][docs-lib]
+
+[Build]: https://img.shields.io/github/workflow/status/mattcl/confpiler/CI/master
+[actions]: https://github.com/mattcl/confpiler/actions?query=branch%3Amaster
+[docs.rs (lib)]: https://img.shields.io/docsrs/confpiler
+[docs-lib]: https://docs.rs/confpiler
+
 
 
 A library and cli tool for "compiling" an ordered set of configuration files
