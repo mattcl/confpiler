@@ -3,14 +3,17 @@
 
 # Confpiler #
 
-[![Build]][actions] [![docs.rs (lib)]][docs-lib]
+[![Build]][actions] [![docs.rs (lib)]][docs-lib] [![Crates.io (lib)]][lib]
+[![Crates.io (cli)]][cli]
 
 [Build]: https://img.shields.io/github/workflow/status/mattcl/confpiler/CI/master
 [actions]: https://github.com/mattcl/confpiler/actions?query=branch%3Amaster
 [docs.rs (lib)]: https://img.shields.io/docsrs/confpiler
 [docs-lib]: https://docs.rs/confpiler
-
-
+[Crates.io (lib)]: https://img.shields.io/crates/v/confpiler?label=crates.io%20%28lib%29
+[lib]: https://crates.io/crates/confpiler
+[Crates.io (cli)]: https://img.shields.io/crates/v/confpiler_cli?label=crates.io%20%28cli%29
+[cli]: https://crates.io/crates/confpiler_cli
 
 A library and cli tool for "compiling" an ordered set of configuration files
 into a single, flattened representation suitable for exporting to environment
