@@ -1,0 +1,6 @@
+GLOBAL__INDICATOR=true
+MYARR=11,33
+MYKEY__BAR=cold
+MYKEY__BAZ=planet
+MYKEY__FOO=hello
+SMOKE=conf_dir/production

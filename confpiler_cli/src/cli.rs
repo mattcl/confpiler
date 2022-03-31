@@ -82,6 +82,10 @@ pub struct BuildArgs {
     /// Disable sorting for .env-style output (json is always unsorted)
     #[clap(short = 'N', long = "no-sort")]
     pub no_sort: bool,
+
+    /// Perform no quoting or escaping. Does not work with --json
+    #[clap(short, long, conflicts_with = "json")]
+    pub raw: bool,
 }
 
 #[derive(Args)]

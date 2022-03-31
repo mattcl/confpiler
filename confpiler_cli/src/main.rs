@@ -23,6 +23,11 @@ fn main() -> Result<()> {
                 }
 
                 for (k, v) in items {
+                    if build_args.raw {
+                        println!("{}={}", k, v);
+                        continue;
+                    }
+
                     // So the behavior of the library being used to do the
                     // escaping automatically ads single/double quotes if
                     // necessary, and does not otherwise. So we have to do this
