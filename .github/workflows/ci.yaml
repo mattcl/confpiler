@@ -67,7 +67,8 @@ jobs:
       - name: Build archive
         shell: bash
         run: |
-          package_dir="confpiler-${{ version }}-${{ matrix.job.target }}"
+          version=$(cargo pkgid confpiler_cli | cut -d# -f2 | cut -d: -f2)
+          package_dir="confpiler-${version}-${{ matrix.job.target }}"
           archive="${package_dir}.tar.gz"
           mkdir -p "${package_dir}"
 
