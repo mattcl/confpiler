@@ -37,8 +37,7 @@ jobs:
           # - { target: x86_64-pc-windows-gnu, os: windows-2019 }
           # osx
           - { target: x86_64-apple-darwin, os: macos-11 }
-          # TODO: figure out invocation for this
-          # - { target: aarch64-apple-darwin, os: macos-11 }
+          - { target: aarch64-apple-darwin, os: macos-11 }
 
     steps:
       - name: Checkout
@@ -52,7 +51,9 @@ jobs:
           override: true
           profile: minimal
 
+      # we need to skip this for apple silicon target
       - name: Test
+        if: ${{ matrix.job.target != "aarch64-apple-darwin" }}
         uses: actions-rs/cargo@v1
         with:
           command: test
