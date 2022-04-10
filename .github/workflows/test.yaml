@@ -58,27 +58,3 @@ jobs:
         with:
           command: test
           args: --target=${{ matrix.job.target }}
-
-      - name: Build release target
-        uses: actions-rs/cargo@v1
-        with:
-          command: build
-          args: --release --target=${{ matrix.job.target }}
-
-      - name: Build archive
-        shell: bash
-        run: |
-          version=$(cargo pkgid confpiler_cli | cut -d# -f2 | cut -d: -f2)
-          package_dir="confpiler-${version}-${{ matrix.job.target }}"
-          archive="${package_dir}.tar.gz"
-          mkdir -p "${package_dir}"
-
-          cp target/${{ matrix.job.target }}/release/confpiler "${package_dir}/"
-          tar czf "${archive}" "${package_dir}"
-          echo "ARCHIVE=${archive}" >> $GITHUB_ENV
-
-      - name: Store artifact
-        uses: actions/upload-artifact@v3
-        with:
-          name: ${{ env.ARCHIVE }}
-          path: ${{ env.ARCHIVE }}

@@ -1,0 +1,100 @@
+# modified from gitoxide's release workflow
+name: release
+on:
+  push:
+    tags:
+      - "v[0-9]+.[0-9]+.[0-9]+"
+jobs:
+  create-release:
+    name: create-release
+    runs-on: ubuntu-latest
+    steps:
+      - name: Create artifacts directory
+        run: mkdir artifacts
+
+      - name: Determine release version from tag
+        run: |
+          echo "ARTIFACT_VERSION=${GITHUB_REF#refs/tags/}" >> $GITHUB_ENV
+          echo "version is: ${{ env.ARTIFACT_VERSION }}"
+
+      - name: Create release
+        id: release
+        uses: ncipollo/release-action@v1
+        with:
+          tag: ${{ env.ARTIFACT_VERSION }}
+          name: ${{ env.ARTIFACT_VERSION }}
+          allowUpdates: true
+          omitBody: true
+          omitPrereleaeDuringUpdate: true
+
+      - name: Save version number
+        run: echo "${{ env.ARTIFACT_VERSION }}" > artifacts/release-version
+
+      - name: Upload artifacts
+        uses: actions/upload-artifact@v1
+        with:
+          name: artifacts
+          path: artifacts
+
+  build-release:
+    name: build-release ${{ matrix.job.target }} (${{ matrix.job.os }})
+    needs: ["create-release"]
+    runs-on: ${{ matrix.job.os }}
+    strategy:
+      matrix:
+        job:
+          # linux
+          - { target: x86_64-unknown-linux-gnu, os: ubuntu-18.04 }
+          - { target: x86_64-unknown-linux-musl, os: ubuntu-18.04 }
+          # osx
+          - { target: x86_64-apple-darwin, os: macos-11 }
+          - { target: aarch64-apple-darwin, os: macos-11 }
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Get release upload URL
+        uses: actions/download-artifact@v1
+        with:
+          name: artifacts
+          path: artifacts
+
+      - name: Set release version
+        shell: bash
+        run: |
+          release_version="$(cat artifacts/release-version)"
+          echo "RELEASE_VERSION=$release_version" >> $GITHUB_ENV
+          echo "release version: $RELEASE_VERSION"
+
+      - name: Install toolchain
+        uses: actions-rs/toolchain@v1
+        with:
+          toolchain: stable
+          target: ${{ matrix.job.target }}
+          override: true
+          profile: minimal
+
+      - name: Build release target
+        uses: actions-rs/cargo@v1
+        with:
+          command: build
+          args: --release --target=${{ matrix.job.target }}
+
+      - name: Build archive
+        shell: bash
+        run: |
+          package_dir="confpiler-${{ env.RELEASE_VERSION }}-${{ matrix.job.target }}"
+          archive="${package_dir}.tar.gz"
+          mkdir -p "${package_dir}"
+
+          cp target/${{ matrix.job.target }}/release/confpiler "${package_dir}/"
+          tar czf "${archive}" "${package_dir}"
+          echo "ASSET=${archive}" >> $GITHUB_ENV
+
+      # apparently, the actions/uploadwhatever is now unmaintained, and this is
+      # recommended as the solution, but there's no directly equivalent action,
+      # so we're going to hope this keeps working
+      - name: Upload release archive
+        uses: softprops/action-gh-release@v1
+        with:
+          files: ${{ env.ASSET }}
