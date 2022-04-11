@@ -1,6 +1,3 @@
-**This is currently a hobby project.** While it currently works as advertised
-(at least on linux), patches may be slow.
-
 # Confpiler #
 
 [![Build]][actions] [![docs.rs (lib)]][docs-lib] [![Crates.io (lib)]][lib]

@@ -1,6 +1,3 @@
-**This is currently a hobby project.** While it currently works as advertised
-(at least on linux), patches may be slow.
-
 # Confpiler (cli) #
 
 This cli tool is intended to "compile" an ordered set of configuration files
