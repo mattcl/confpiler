@@ -1,7 +1,7 @@
 [package]
 name = "confpiler_cli"
 authors = ["Matt Chun-Lum <matt@questionable.engineering>"]
-version = "0.4.1"
+version = "0.4.2"
 edition = "2021"
 license = "MIT OR Apache-2.0"
 description = "A configuration \"compiler\" and exporter"
