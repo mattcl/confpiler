@@ -5,10 +5,35 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## 0.3.2 (2022-04-11)
+
+### Documentation
+
+ - <csr-id-6f9fa99f1ed03365a4a8e2eac8aecd7e0bd53edf/> make behavior of multiple directories more clear
+
+### Commit Statistics
+
+<csr-read-only-do-not-edit/>
+
+ - 1 commit contributed to the release.
+ - 1 commit where understood as [conventional](https://www.conventionalcommits.org).
+ - 0 issues like '(#ID)' where seen in commit messages
+
+### Commit Details
+
+<csr-read-only-do-not-edit/>
+
+<details><summary>view details</summary>
+
+ * **Uncategorized**
+    - make behavior of multiple directories more clear ([`6f9fa99`](https://github.comgit//mattcl/confpiler/commit/6f9fa99f1ed03365a4a8e2eac8aecd7e0bd53edf))
+</details>
+
 ## 0.3.1 (2022-04-11)
 
 <csr-id-598449234c43b8ef010c7d738086a7a7908fd3ea/>
 <csr-id-0c8f530b9d670f729c0766209f80f1fb4ea05b68/>
+<csr-id-8b4d0bf65e14f1f213674d717755fe94fe51a2f8/>
 
 ### Chore
 
@@ -34,7 +59,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 <csr-read-only-do-not-edit/>
 
- - 10 commits contributed to the release over the course of 45 calendar days.
+ - 11 commits contributed to the release over the course of 45 calendar days.
  - 10 commits where understood as [conventional](https://www.conventionalcommits.org).
  - 0 issues like '(#ID)' where seen in commit messages
 
@@ -45,6 +70,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 <details><summary>view details</summary>
 
  * **Uncategorized**
+    - Release confpiler v0.2.1, confpiler_cli v0.3.1 ([`e781460`](https://github.comgit//mattcl/confpiler/commit/e78146059e9b97f324dba3806edd2d2ab5a61e10))
     - add changelogs ([`8b4d0bf`](https://github.comgit//mattcl/confpiler/commit/8b4d0bf65e14f1f213674d717755fe94fe51a2f8))
     - allow for getting unescaped, unquoted output with --raw ([`a824cb0`](https://github.comgit//mattcl/confpiler/commit/a824cb042468c2ad18edc5cf045dbb99a1142bba))
     - clippy suggestions ([`5984492`](https://github.comgit//mattcl/confpiler/commit/598449234c43b8ef010c7d738086a7a7908fd3ea))
