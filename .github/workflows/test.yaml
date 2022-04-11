@@ -42,6 +42,11 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2
 
+      - name: Install packages (Ubuntu)
+        if: matrix.job.os == 'ubuntu-18.04'
+        run: |
+          ci/ubuntu-install_packages
+
       - name: Install toolchain
         uses: actions-rs/toolchain@v1
         with:
