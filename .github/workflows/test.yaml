@@ -45,7 +45,7 @@ jobs:
       - name: Install packages (Ubuntu)
         if: matrix.job.os == 'ubuntu-18.04'
         run: |
-          ci/ubuntu-install_packages
+          ci/ubuntu-install-packages
 
       - name: Install toolchain
         uses: actions-rs/toolchain@v1
