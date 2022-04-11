@@ -15,9 +15,7 @@ jobs:
       - name: Determine release version from tag
         run: |
           echo "RELEASE_TAG=${{ github.ref_name }}" >> $GITHUB_ENV
-          echo "version is: ${{ env.RELEASE_TAG }}"
           echo "RELEASE_NAME=${{ github.ref_name }}" | sed -r 's/-/ /g' >> $GITHUB_ENV
-          echo "release name is: ${{ env.RELEASE_NAME }}"
 
       - name: Create release
         id: release
@@ -91,7 +89,7 @@ jobs:
       - name: Build archive
         shell: bash
         run: |
-          package_dir="${{ env.RELEASE_tag }}-${{ matrix.job.target }}"
+          package_dir="${{ env.RELEASE_TAG }}-${{ matrix.job.target }}"
           archive="${package_dir}.tar.gz"
           mkdir -p "${package_dir}"
 
