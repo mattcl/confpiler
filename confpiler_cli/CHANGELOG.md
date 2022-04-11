@@ -5,11 +5,11 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## 0.3.3 (2022-04-11)
+## 0.3.4 (2022-04-11)
 
-### Documentation
+### Refactor
 
- - <csr-id-68ffe60270a0f32a0925e7f4a3cc4f913f7da287/> call out usage for --raw when dealing with old versions of compose
+ - <csr-id-f2728d887b88feabaf0d53a1e7bd787f288ea652/> move cli config getting into args
 
 ### Commit Statistics
 
@@ -26,6 +26,31 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 <details><summary>view details</summary>
 
  * **Uncategorized**
+    - move cli config getting into args ([`f2728d8`](https://github.comgit//mattcl/confpiler/commit/f2728d887b88feabaf0d53a1e7bd787f288ea652))
+</details>
+
+## 0.3.3 (2022-04-11)
+
+### Documentation
+
+ - <csr-id-68ffe60270a0f32a0925e7f4a3cc4f913f7da287/> call out usage for --raw when dealing with old versions of compose
+
+### Commit Statistics
+
+<csr-read-only-do-not-edit/>
+
+ - 2 commits contributed to the release.
+ - 1 commit where understood as [conventional](https://www.conventionalcommits.org).
+ - 0 issues like '(#ID)' where seen in commit messages
+
+### Commit Details
+
+<csr-read-only-do-not-edit/>
+
+<details><summary>view details</summary>
+
+ * **Uncategorized**
+    - Release confpiler_cli v0.3.3 ([`15735e3`](https://github.comgit//mattcl/confpiler/commit/15735e3ff10135e60ff4ca4397bd50c583495117))
     - call out usage for --raw when dealing with old versions of compose ([`68ffe60`](https://github.comgit//mattcl/confpiler/commit/68ffe60270a0f32a0925e7f4a3cc4f913f7da287))
 </details>
 
