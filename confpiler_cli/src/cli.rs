@@ -107,10 +107,11 @@ pub struct CommonConfigArgs {
     /// corresponding to the specified ENVIRONMENT, if any. If no environment
     /// is set, ONLY the default is loaded.
     ///
-    /// This means that if specifying two or more directories, a directory is
-    /// processed completely before moving on to the next directory, meaning
-    /// that configurations specified in a subsequent directory will ALWAYS
-    /// take precedence.
+    /// This means that if specifying multiple directories, each directory is
+    /// processed completely before moving on to the next directory
+    /// (dir1/default, dir1/ENVIRONMENT, then dir2/default, dir2/ENVIRONMENT),
+    /// meaning that configurations specified in a subsequent directory will
+    /// ALWAYS take precedence.
     #[clap(required = true, parse(from_os_str))]
     pub path: Vec<PathBuf>,
 
