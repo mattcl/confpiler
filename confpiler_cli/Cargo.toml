@@ -1,7 +1,7 @@
 [package]
 name = "confpiler_cli"
 authors = ["Matt Chun-Lum <matt@questionable.engineering>"]
-version = "0.3.0"
+version = "0.3.1"
 edition = "2021"
 license = "MIT OR Apache-2.0"
 description = "A configuration \"compiler\" and exporter"
@@ -19,7 +19,7 @@ doc = false
 [dependencies]
 anyhow = "1.0"
 clap = { version = "3.1.2", features = ["derive"] }
-confpiler = { version = "0.2.0", path = "../confpiler" }
+confpiler = { version = "^0.2.1", path = "../confpiler" }
 serde_json = "1.0"
 snailquote = "0.3"
 

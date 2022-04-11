@@ -5,10 +5,14 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## Unreleased
+## 0.3.1 (2022-04-11)
 
 <csr-id-598449234c43b8ef010c7d738086a7a7908fd3ea/>
 <csr-id-0c8f530b9d670f729c0766209f80f1fb4ea05b68/>
+
+### Chore
+
+ - <csr-id-8b4d0bf65e14f1f213674d717755fe94fe51a2f8/> add changelogs
 
 ### Documentation
 
@@ -30,8 +34,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 <csr-read-only-do-not-edit/>
 
- - 9 commits contributed to the release over the course of 45 calendar days.
- - 9 commits where understood as [conventional](https://www.conventionalcommits.org).
+ - 10 commits contributed to the release over the course of 45 calendar days.
+ - 10 commits where understood as [conventional](https://www.conventionalcommits.org).
  - 0 issues like '(#ID)' where seen in commit messages
 
 ### Commit Details
@@ -41,6 +45,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 <details><summary>view details</summary>
 
  * **Uncategorized**
+    - add changelogs ([`8b4d0bf`](https://github.comgit//mattcl/confpiler/commit/8b4d0bf65e14f1f213674d717755fe94fe51a2f8))
     - allow for getting unescaped, unquoted output with --raw ([`a824cb0`](https://github.comgit//mattcl/confpiler/commit/a824cb042468c2ad18edc5cf045dbb99a1142bba))
     - clippy suggestions ([`5984492`](https://github.comgit//mattcl/confpiler/commit/598449234c43b8ef010c7d738086a7a7908fd3ea))
     - allow specifying a prefix for generated keys ([`9781899`](https://github.comgit//mattcl/confpiler/commit/9781899d3b3101eef91af431befa964c65bf87be))
