@@ -6,8 +6,8 @@ on:
   push:
     branches:
       - master
-    tags:
-      - '*'
+    tags-ignore:
+      - '**'
 
 jobs:
   cheeck_formatting:
