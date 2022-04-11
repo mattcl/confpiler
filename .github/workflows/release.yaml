@@ -3,7 +3,7 @@ name: release
 on:
   push:
     tags:
-      - "v[0-9]+.[0-9]+.[0-9]+"
+      - "confpiler_cli-v[0-9]+.[0-9]+.[0-9]+"
 jobs:
   create-release:
     name: create-release
@@ -14,21 +14,26 @@ jobs:
 
       - name: Determine release version from tag
         run: |
-          echo "ARTIFACT_VERSION=${GITHUB_REF#refs/tags/}" >> $GITHUB_ENV
-          echo "version is: ${{ env.ARTIFACT_VERSION }}"
+          echo "RELEASE_TAG=${GITHUB_REF#refs/tags/}" >> $GITHUB_ENV
+          echo "version is: ${{ env.RELEASE_TAG }}"
+          echo "RELEASE_NAME=${GITHUB_REF#refs/tags/}" | sed -r 's/-/ /g' >> $GITHUB_ENV
+          echo "release name is: ${{ env.RELEASE_NAME }}"
 
       - name: Create release
         id: release
         uses: ncipollo/release-action@v1
         with:
-          tag: ${{ env.ARTIFACT_VERSION }}
-          name: ${{ env.ARTIFACT_VERSION }}
+          tag: ${{ env.RELEASE_TAG }}
+          name: ${{ env.RELEASE_NAME }}
           allowUpdates: true
           omitBody: true
           omitPrereleaeDuringUpdate: true
 
-      - name: Save version number
-        run: echo "${{ env.ARTIFACT_VERSION }}" > artifacts/release-version
+      - name: Save release tag
+        run: echo "${{ env.RELEASE_TAG }}" > artifacts/release-tag
+
+      - name: Save release name
+        run: echo "${{ env.RELEASE_NAME }}" > artifacts/release-name
 
       - name: Upload artifacts
         uses: actions/upload-artifact@v1
@@ -53,18 +58,21 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2
 
-      - name: Get release upload URL
+      - name: Get release information
         uses: actions/download-artifact@v1
         with:
           name: artifacts
           path: artifacts
 
-      - name: Set release version
+      - name: Set release information
         shell: bash
         run: |
-          release_version="$(cat artifacts/release-version)"
-          echo "RELEASE_VERSION=$release_version" >> $GITHUB_ENV
-          echo "release version: $RELEASE_VERSION"
+          release_tag="$(cat artifacts/release-tag)"
+          echo "RELEASE_TAG=$release_tag" >> $GITHUB_ENV
+          echo "release version: $RELEASE_TAG"
+          release_name="$(cat artifacts/release-name)"
+          echo "RELEASE_NAME=$release_name" >> $GITHUB_ENV
+          echo "release name: $RELEASE_NAME"
 
       - name: Install toolchain
         uses: actions-rs/toolchain@v1
@@ -83,7 +91,7 @@ jobs:
       - name: Build archive
         shell: bash
         run: |
-          package_dir="confpiler-${{ env.RELEASE_VERSION }}-${{ matrix.job.target }}"
+          package_dir="${{ env.RELEASE_tag }}-${{ matrix.job.target }}"
           archive="${package_dir}.tar.gz"
           mkdir -p "${package_dir}"
 
