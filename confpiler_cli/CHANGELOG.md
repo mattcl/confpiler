@@ -5,11 +5,11 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## 0.3.4 (2022-04-11)
+## 0.4.0 (2022-04-11)
 
-### Refactor
+### New Features
 
- - <csr-id-f2728d887b88feabaf0d53a1e7bd787f288ea652/> move cli config getting into args
+ - <csr-id-88a6565ca1306eec34de219a54d21445590c7d5c/> `update` command for self updates
 
 ### Commit Statistics
 
@@ -26,6 +26,33 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 <details><summary>view details</summary>
 
  * **Uncategorized**
+    - `update` command for self updates ([`88a6565`](https://github.comgit//mattcl/confpiler/commit/88a6565ca1306eec34de219a54d21445590c7d5c))
+</details>
+
+## 0.3.4 (2022-04-11)
+
+<csr-id-f2728d887b88feabaf0d53a1e7bd787f288ea652/>
+
+### Refactor
+
+ - <csr-id-f2728d887b88feabaf0d53a1e7bd787f288ea652/> move cli config getting into args
+
+### Commit Statistics
+
+<csr-read-only-do-not-edit/>
+
+ - 2 commits contributed to the release.
+ - 1 commit where understood as [conventional](https://www.conventionalcommits.org).
+ - 0 issues like '(#ID)' where seen in commit messages
+
+### Commit Details
+
+<csr-read-only-do-not-edit/>
+
+<details><summary>view details</summary>
+
+ * **Uncategorized**
+    - Release confpiler_cli v0.3.4 ([`f308c6b`](https://github.comgit//mattcl/confpiler/commit/f308c6b771a26a7a7b98cf2d231d642f9b7dad49))
     - move cli config getting into args ([`f2728d8`](https://github.comgit//mattcl/confpiler/commit/f2728d887b88feabaf0d53a1e7bd787f288ea652))
 </details>
 
