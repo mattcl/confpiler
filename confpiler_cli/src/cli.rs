@@ -84,6 +84,9 @@ pub struct BuildArgs {
     pub no_sort: bool,
 
     /// Perform no quoting or escaping. Does not work with --json
+    ///
+    /// This option is potentially useful for making env files that older
+    /// versions of docker compose will understand.
     #[clap(short, long, conflicts_with = "json")]
     pub raw: bool,
 }
@@ -109,7 +112,7 @@ pub struct CommonConfigArgs {
     ///
     /// This means that if specifying multiple directories, each directory is
     /// processed completely before moving on to the next directory
-    /// (dir1/default, dir1/ENVIRONMENT, then dir2/default, dir2/ENVIRONMENT),
+    /// (dir1/DEFAULT, dir1/ENVIRONMENT, then dir2/DEFAULT, dir2/ENVIRONMENT),
     /// meaning that configurations specified in a subsequent directory will
     /// ALWAYS take precedence.
     #[clap(required = true, parse(from_os_str))]
