@@ -5,11 +5,11 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## 0.4.0 (2022-04-11)
+## 0.4.1 (2022-04-11)
 
-### New Features
+### Bug Fixes
 
- - <csr-id-88a6565ca1306eec34de219a54d21445590c7d5c/> `update` command for self updates
+ - <csr-id-899bd6a4caa5f74acaa8dc21686fbcf8ba0bd961/> use rustls feature for self_update to avoid openssl musl pain
 
 ### Commit Statistics
 
@@ -26,6 +26,31 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 <details><summary>view details</summary>
 
  * **Uncategorized**
+    - use rustls feature for self_update to avoid openssl musl pain ([`899bd6a`](https://github.comgit//mattcl/confpiler/commit/899bd6a4caa5f74acaa8dc21686fbcf8ba0bd961))
+</details>
+
+## 0.4.0 (2022-04-11)
+
+### New Features
+
+ - <csr-id-88a6565ca1306eec34de219a54d21445590c7d5c/> `update` command for self updates
+
+### Commit Statistics
+
+<csr-read-only-do-not-edit/>
+
+ - 2 commits contributed to the release.
+ - 1 commit where understood as [conventional](https://www.conventionalcommits.org).
+ - 0 issues like '(#ID)' where seen in commit messages
+
+### Commit Details
+
+<csr-read-only-do-not-edit/>
+
+<details><summary>view details</summary>
+
+ * **Uncategorized**
+    - Release confpiler_cli v0.4.0 ([`3510338`](https://github.comgit//mattcl/confpiler/commit/35103380caf2d5612a460360b8e898d9c92d5f70))
     - `update` command for self updates ([`88a6565`](https://github.comgit//mattcl/confpiler/commit/88a6565ca1306eec34de219a54d21445590c7d5c))
 </details>
 
