@@ -49,7 +49,7 @@ jobs:
         job:
           # linux
           - { target: x86_64-unknown-linux-gnu, os: ubuntu-18.04 }
-          # - { target: x86_64-unknown-linux-musl, os: ubuntu-18.04 }
+          - { target: x86_64-unknown-linux-musl, os: ubuntu-18.04 }
           # osx
           - { target: x86_64-apple-darwin, os: macos-11 }
           - { target: aarch64-apple-darwin, os: macos-11 }
