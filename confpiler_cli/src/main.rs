@@ -60,6 +60,9 @@ fn main() -> Result<()> {
 
             println!("\nok")
         }
+        TopLevel::Update(update_args) => {
+            update_args.update()?;
+        }
     }
 
     Ok(())

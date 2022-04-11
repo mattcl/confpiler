@@ -3,6 +3,7 @@ use std::path::{Path, PathBuf};
 use anyhow::{anyhow, bail, Context, Result};
 use clap::{Args, Parser, Subcommand};
 use confpiler::{error::ConfpilerError, FlatConfig, MergeWarning};
+use self_update::{backends::github, cargo_crate_version, get_target};
 
 const EXAMPLES: &str = "
 Examples:
@@ -68,6 +69,8 @@ pub enum TopLevel {
     Build(BuildArgs),
     /// Checks if a configuration would be valid and exits nonzero if not
     Check(CheckArgs),
+    /// Attempt to update confpiler
+    Update(UpdateArgs),
 }
 
 #[derive(Args)]
@@ -232,5 +235,55 @@ fn check_stem_exists(path: &Path, desired: &str) -> Result<bool> {
             }))
     } else {
         Ok(false)
+    }
+}
+
+#[derive(Args)]
+pub struct UpdateArgs {
+    /// Do not prompt for confirmation
+    #[clap(short, long)]
+    pub yes: bool,
+}
+
+impl UpdateArgs {
+    pub fn update(&self) -> Result<()> {
+        let releases = github::ReleaseList::configure()
+            .repo_owner("mattcl")
+            .repo_name("confpiler")
+            .build()?
+            .fetch()?;
+
+        let version = format!("confpiler_cli-v{}", cargo_crate_version!());
+
+        if let Some(release) = releases
+            .iter()
+            .find(|r| r.name.starts_with("confpiler_cli"))
+        {
+            if release.version != version {
+                // so this is frustrating, but we're working around the
+                // limitations of self_update for now (no easy way to reference
+                // the dir name and no easy support for tag prefixes)
+                let bin_path = format!("{}-{}/confpiler", release.version, get_target());
+
+                let status = github::Update::configure()
+                    .repo_owner("mattcl")
+                    .repo_name("confpiler")
+                    .bin_name("confpiler")
+                    .bin_path_in_archive(&bin_path)
+                    .current_version(&version)
+                    .target_version_tag(&release.version)
+                    .no_confirm(self.yes)
+                    .build()?
+                    .update()?;
+
+                if status.updated() {
+                    println!("Updated to: {}", status.version());
+                    return Ok(());
+                }
+            }
+        }
+
+        println!("Confpiler is already the latest version");
+        Ok(())
     }
 }
