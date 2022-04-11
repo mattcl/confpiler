@@ -1,7 +1,7 @@
-use anyhow::{Context, Result};
+use anyhow::Result;
 use clap::Parser;
-use cli::{Cli, CommonConfigArgs, TopLevel};
-use confpiler::{error::ConfpilerError, FlatConfig, MergeWarning};
+use cli::{Cli, TopLevel};
+use confpiler::MergeWarning;
 use snailquote::escape;
 
 mod cli;
@@ -10,7 +10,7 @@ fn main() -> Result<()> {
     let args = Cli::parse();
     match &args.command {
         TopLevel::Build(build_args) => {
-            let (conf, _) = get_config(&build_args.common)?;
+            let (conf, _) = build_args.common.get_config()?;
 
             if build_args.json {
                 println!("{}", serde_json::to_string(conf.items())?);
@@ -49,7 +49,7 @@ fn main() -> Result<()> {
         }
         TopLevel::Check(check_args) => {
             println!("Checking configuration...");
-            let (_, warnings) = get_config(&check_args.common)?;
+            let (_, warnings) = check_args.common.get_config()?;
 
             if !warnings.is_empty() {
                 // just print the warnings here, since we handled the strict
@@ -63,22 +63,6 @@ fn main() -> Result<()> {
     }
 
     Ok(())
-}
-
-fn get_config(args: &CommonConfigArgs) -> Result<(FlatConfig, Vec<MergeWarning>)> {
-    let (conf, warnings) = args
-        .try_make_config()
-        .context("Configuration as specified is not valid")?;
-
-    if !warnings.is_empty() && args.strict {
-        // we turn the warnings into an error
-        Err(ConfpilerError::from(warnings))
-            .context("Configuration is not valid when treating warnings as errors")?
-    } else {
-        // we need to do this in an "else" block to avoid moving warnings in a
-        // way the compiler can't deal with
-        Ok((conf, warnings))
-    }
 }
 
 // so doing this sort here is a little weird, but we already have sorted output

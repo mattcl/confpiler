@@ -2,7 +2,7 @@ use std::path::{Path, PathBuf};
 
 use anyhow::{anyhow, bail, Context, Result};
 use clap::{Args, Parser, Subcommand};
-use confpiler::{FlatConfig, MergeWarning};
+use confpiler::{error::ConfpilerError, FlatConfig, MergeWarning};
 
 const EXAMPLES: &str = "
 Examples:
@@ -195,6 +195,22 @@ impl CommonConfigArgs {
         }
 
         Ok(builder.build()?)
+    }
+
+    pub fn get_config(&self) -> Result<(FlatConfig, Vec<MergeWarning>)> {
+        let (conf, warnings) = self
+            .try_make_config()
+            .context("Configuration as specified is not valid")?;
+
+        if !warnings.is_empty() && self.strict {
+            // we turn the warnings into an error
+            Err(ConfpilerError::from(warnings))
+                .context("Configuration is not valid when treating warnings as errors")?
+        } else {
+            // we need to do this in an "else" block to avoid moving warnings in a
+            // way the compiler can't deal with
+            Ok((conf, warnings))
+        }
     }
 }
 
