@@ -24,19 +24,20 @@ jobs:
       - run: cargo fmt -- --check
 
   build:
-    name: ${{ matrix.job.target }} (${{ matrix.job.os }})
+    name: ${{ matrix.job.target }} (${{ matrix.job.os }}) (${{ matrix.job.toolchain }})
     runs-on: ${{ matrix.job.os }}
     strategy:
       fail-fast: false
       matrix:
         job:
-          - { target: x86_64-unknown-linux-gnu, os: ubuntu-18.04 }
-          - { target: x86_64-unknown-linux-musl, os: ubuntu-18.04 }
+          - { target: x86_64-unknown-linux-gnu, os: ubuntu-18.04, toolchain: stable }
+          - { target: x86_64-unknown-linux-gnu, os: ubuntu-18.04, toolchain: 1.58.0 }
+          - { target: x86_64-unknown-linux-musl, os: ubuntu-18.04, toolchain: stable }
           # windows
           # - { target: x86_64-pc-windows-gnu, os: windows-2019 }
           # - { target: x86_64-pc-windows-gnu, os: windows-2019 }
           # osx
-          - { target: x86_64-apple-darwin, os: macos-11 }
+          - { target: x86_64-apple-darwin, os: macos-11, toolchain: stable }
 
     steps:
       - name: Checkout
@@ -50,7 +51,7 @@ jobs:
       - name: Install toolchain
         uses: actions-rs/toolchain@v1
         with:
-          toolchain: stable
+          toolchain: ${{ matrix.job.toolchain }}
           target: ${{ matrix.job.target }}
           override: true
           profile: minimal
