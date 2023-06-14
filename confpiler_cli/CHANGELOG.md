@@ -5,6 +5,30 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## 0.5.1 (2023-06-14)
+
+### Chore
+
+ - <csr-id-bf51f890611057e3fed6115e8e0ea384eddce8f3/> bump version instead of fixing ci
+
+### Commit Statistics
+
+<csr-read-only-do-not-edit/>
+
+ - 1 commit contributed to the release.
+ - 1 commit was understood as [conventional](https://www.conventionalcommits.org).
+ - 0 issues like '(#ID)' were seen in commit messages
+
+### Commit Details
+
+<csr-read-only-do-not-edit/>
+
+<details><summary>view details</summary>
+
+ * **Uncategorized**
+    - Bump version instead of fixing ci ([`bf51f89`](https://github.com/mattcl/confpiler/commit/bf51f890611057e3fed6115e8e0ea384eddce8f3))
+</details>
+
 ## 0.5.0 (2023-06-14)
 
 <csr-id-a9341562e6add4adc8b204b00ff1c02859d97025/>
@@ -19,7 +43,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 <csr-read-only-do-not-edit/>
 
- - 2 commits contributed to the release.
+ - 3 commits contributed to the release.
  - 418 days passed between releases.
  - 1 commit was understood as [conventional](https://www.conventionalcommits.org).
  - 0 issues like '(#ID)' were seen in commit messages
@@ -31,6 +55,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 <details><summary>view details</summary>
 
  * **Uncategorized**
+    - Release confpiler_cli v0.5.0 ([`4c74f62`](https://github.com/mattcl/confpiler/commit/4c74f629fbb63679b141c756fd5caf5432fa70ed))
     - Release confpiler_cli v0.5.0 ([`adfcd24`](https://github.com/mattcl/confpiler/commit/adfcd24d4bc93734f71d311040740d3fa6b3e8cc))
     - Update self-update. ([`a934156`](https://github.com/mattcl/confpiler/commit/a9341562e6add4adc8b204b00ff1c02859d97025))
 </details>
