@@ -3,7 +3,7 @@ name = "confpiler_cli"
 authors = ["Matt Chun-Lum <matt@questionable.engineering>"]
 version = "0.4.3"
 edition = "2021"
-rust-version = "1.58"
+rust-version = "1.62.1"
 license = "MIT OR Apache-2.0"
 description = "A configuration \"compiler\" and exporter"
 readme = "README.md"
@@ -21,7 +21,7 @@ doc = false
 anyhow = "1.0"
 clap = { version = "3.1.2", features = ["derive"] }
 confpiler = { version = "^0.2.2", path = "../confpiler" }
-self_update = { version = "0.29", default-features = false, features = ["archive-tar", "compression-flate2", "rustls"] }
+self_update = { version = "0.37", default-features = false, features = ["archive-tar", "compression-flate2", "rustls"] }
 serde_json = "1.0"
 snailquote = "0.3"
 
