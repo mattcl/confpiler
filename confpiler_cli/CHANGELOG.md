@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## 0.5.0 (2023-06-14)
 
+<csr-id-a9341562e6add4adc8b204b00ff1c02859d97025/>
+
 ### Chore (BREAKING)
 
  - <csr-id-a9341562e6add4adc8b204b00ff1c02859d97025/> update self-update.
@@ -17,7 +19,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 <csr-read-only-do-not-edit/>
 
- - 1 commit contributed to the release.
+ - 2 commits contributed to the release.
  - 418 days passed between releases.
  - 1 commit was understood as [conventional](https://www.conventionalcommits.org).
  - 0 issues like '(#ID)' were seen in commit messages
@@ -29,6 +31,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 <details><summary>view details</summary>
 
  * **Uncategorized**
+    - Release confpiler_cli v0.5.0 ([`adfcd24`](https://github.com/mattcl/confpiler/commit/adfcd24d4bc93734f71d311040740d3fa6b3e8cc))
     - Update self-update. ([`a934156`](https://github.com/mattcl/confpiler/commit/a9341562e6add4adc8b204b00ff1c02859d97025))
 </details>
 
