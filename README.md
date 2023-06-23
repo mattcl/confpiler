@@ -3,8 +3,8 @@
 [![Build]][actions] [![docs.rs (lib)]][docs-lib] [![Crates.io (lib)]][lib]
 [![Crates.io (cli)]][cli]
 
-[Build]: https://img.shields.io/github/workflow/status/mattcl/confpiler/CI/master
-[actions]: https://github.com/mattcl/confpiler/actions?query=branch%3Amaster
+[Build]: https://img.shields.io/github/actions/workflow/status/mattcl/confpiler/test.yaml?branch=master
+[actions]: https://github.com/mattcl/confpiler/actions?branch?=master
 [docs.rs (lib)]: https://img.shields.io/docsrs/confpiler
 [docs-lib]: https://docs.rs/confpiler
 [Crates.io (lib)]: https://img.shields.io/crates/v/confpiler?label=crates.io%20%28lib%29
