@@ -1,4 +1,5 @@
-lib:
+bin:
   name: confpiler
+  bin-name: confpiler
   repo:
     uri: https://github.com/mattcl/confpiler.git
